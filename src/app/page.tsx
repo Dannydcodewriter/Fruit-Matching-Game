@@ -51,7 +51,7 @@ const WatermelonClub: React.FC = () => {
 	const nextFruitTypeRef = useRef(0);
 	const dropPositionRef = useRef(150);
 
-	const animationFrameRef = useRef<number>();
+	const animationFrameRef = useRef<number>(0);
 	const [soundEnabled, setSoundEnabled] = useState(true);
 
 	const fruitTypes: FruitType[] = [
