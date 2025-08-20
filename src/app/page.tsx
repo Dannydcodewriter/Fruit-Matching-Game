@@ -34,6 +34,12 @@ interface Particle {
 	text?: string;
 }
 
+declare global {
+	interface Window {
+		webkitAudioContext?: typeof AudioContext;
+	}
+}
+
 const WatermelonClub: React.FC = () => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -91,6 +97,8 @@ const WatermelonClub: React.FC = () => {
 		dropPositionRef.current = dropPosition;
 	}, [dropPosition]);
 
+
+	///
 	const playSound = (
 		frequency: number,
 		duration: number,
@@ -100,7 +108,8 @@ const WatermelonClub: React.FC = () => {
 
 		try {
 			const audioContext = new (window.AudioContext ||
-				(window as any).webkitAudioContext)();
+				window.webkitAudioContext!)();
+
 			const oscillator = audioContext.createOscillator();
 			const gainNode = audioContext.createGain();
 
@@ -118,7 +127,7 @@ const WatermelonClub: React.FC = () => {
 
 			oscillator.start(audioContext.currentTime);
 			oscillator.stop(audioContext.currentTime + duration);
-		} catch (e) {
+		} catch {
 			// Silently fail
 		}
 	};
